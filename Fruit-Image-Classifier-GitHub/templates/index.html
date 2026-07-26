@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Image Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="classifier">
+            <div class="header">
+                <p class="eyebrow">CNN Fruit Recognition</p>
+                <h1>Fruit Image Classifier</h1>
+                <p class="subtitle">Upload an apple, banana, or orange image and get a prediction.</p>
+            </div>
+
+            <form class="upload-form" method="POST" enctype="multipart/form-data">
+                <label class="file-input" for="image">
+                    <span>Choose fruit image</span>
+                    <input id="image" type="file" name="image" accept="image/*" required>
+                </label>
+                <button type="submit">Predict Fruit</button>
+            </form>
+
+            {% if error %}
+                <div class="message error">{{ error }}</div>
+            {% endif %}
+
+            {% if prediction %}
+                <div class="result">
+                    <div>
+                        <p class="label">Predicted Class</p>
+                        <h2>{{ prediction }}</h2>
+                        <p class="confidence">Confidence: {{ confidence }}%</p>
+                    </div>
+
+                    {% if image_path %}
+                        <img src="{{ url_for('static', filename=image_path) }}" alt="Uploaded fruit image">
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
